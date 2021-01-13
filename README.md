@@ -1,5 +1,5 @@
 # Installation
 
-Stap 1: Clone repository in user home directory.\n
-Stap 2: Run: chmod +x autoinstall.sh\n
-Stap 3: bash autoinstall.sh\n
+1. Clone repository in user home directory.
+2. Run: chmod +x autoinstall.sh
+3. bash autoinstall.sh
