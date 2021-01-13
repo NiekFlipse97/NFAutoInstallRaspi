@@ -60,6 +60,34 @@ else
 	echo "[ ${CYAN}INFO${RESET} ] - Configuration file contains network_key."
 fi
 
+echo "[ ${CYAN}INFO${RESET} ] - Starting Zigbee2MQTT."
+cd /opt/zigbee2mqtt
+npm start
+
+#( Optional but nice :D ) Running as a daemon with systemctl
+
+if ! echo "$(cat /etc/systemd/system/zigbee2mqtt.service)" | grep "^[Unit]";
+then
+	sudo sh -c 'echo "[Unit]\nDescription=zigbee2mqtt\nAfter=network.target\n\n[Service]\nExecStart=/usr/bin/npm start\nWorkingDirectory=/opt/zigbee2mqtt\nStandardOutput=inherit\nStandardError=inherit\nRestart=always\nUser=pi\n\n[Install]\nWantedBy=multi-user.target" >> /etc/systemd/system/zigbee2mqtt.service'
+	if echo "$(cat /etc/systemd/system/zigbee2mqtt.service)" | grep "^[Unit]";
+	then
+		echo "[ ${GREEN}OK${RESET} ] - Successfully added unit to service file."
+	else
+		echo "[ ${RED}ERROR${RESET} ] - Unable to write unit to service file."
+	fi
+else
+	echo "[ ${CYAN}INFO${RESET} ] - Service file already contains unit."
+fi
+
+echo "[ ${CYAN}INFO${RESET} ] - Reloading systemctl daemon."
+sudo systemctl daemon-reload
+
+echo "[ ${CYAN}INFO${RESET} ] - Starting zigbee2mqtt daemon service."
+sudo systemctl start zigbee2mqtt
+sudo systemctl enable zigbee2mqtt.service
+
+#Install domoticz
+
 
 
 
