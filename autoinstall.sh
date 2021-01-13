@@ -4,6 +4,8 @@ GREEN=$(tput setaf 2)
 CYAN=$(tput setaf 6)
 RESET=$(tput sgr0)
 
+raspi-config
+
 #Update Apt
 sudo apt update -y
 sudo apt upgrade -y
@@ -33,6 +35,7 @@ then
 	echo "[ ${GREEN}OK${RESET} ] - Npm installed."
 else
 	echo "[ ${RED}ERROR${RESET} ] - Node or npm not installed."
+	exit 1
 fi
 
 #Clone zigbee2mqtt repository
@@ -49,12 +52,13 @@ npm ci --production
 echo "[ ${CYAN}INFO${RESET} ] - Check if configuration.yaml contains network_key."
 if ! echo "$(cat /opt/zigbee2mqtt/data/configuration.yaml)" | grep "network_key:";
 then
-	echo "\n\nadvanced:\n  ntwork_key: GENERATE" >> /opt/zigbee2mqtt/data/configuration.yaml
+	echo "\n\nadvanced:\n  network_key: GENERATE" >> /opt/zigbee2mqtt/data/configuration.yaml
 	if echo "$(cat /opt/zigbee2mqtt/data/configuration.yaml)" | grep "network_key:";
 	then
 		echo "[ ${GREEN}OK${RESET} ] - Successfully added network_key to configuration.yaml."
 	else
 		echo "[ ${RED}ERROR${RESET} ] - Unable to write configuration file."
+		exit 1
 	fi
 else
 	echo "[ ${CYAN}INFO${RESET} ] - Configuration file contains network_key."
@@ -87,9 +91,22 @@ sudo systemctl start zigbee2mqtt
 sudo systemctl enable zigbee2mqtt.service
 
 #Install domoticz
+cd /home/pi
+echo "[ ${CYAN}INFO${RESET} ] - Installing domoticz."
+curl -L https://install.domoticz.com | bash
 
+cd domoticz/plugins
 
+if ["$(pwd)" -eq "/home/pi/domoticz/plugins"]
+then
+	git clone https://github.com/stas-demydiuk/domoticz-Zigbee2MQTT-plugins.git Zigbee2MQTT
+	echo "[ ${GREEN}OK${RESET} ] - Installed plugin. Restarting domoticz..."
+	sudo service domoticz.sh restart
+else
+	echo "[ ${RED}ERROR${RESET} ] - Unable to change directory to plugins folder."
+	exit 1
+fi
 
-
+echo "[ ${GREEN}OK${RESET} ] - Done."
 
 
