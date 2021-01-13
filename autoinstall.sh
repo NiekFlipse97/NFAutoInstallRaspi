@@ -78,6 +78,7 @@ then
 		echo "[ ${GREEN}OK${RESET} ] - Successfully added unit to service file."
 	else
 		echo "[ ${RED}ERROR${RESET} ] - Unable to write unit to service file."
+		exit 1
 	fi
 else
 	echo "[ ${CYAN}INFO${RESET} ] - Service file already contains unit."
