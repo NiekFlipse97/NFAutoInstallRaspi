@@ -24,7 +24,7 @@ echo "[ ${CYAN}INFO${RESET} ] - ."
 sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 echo "[ ${CYAN}INFO${RESET} ] - Install packages."
-sudo apt install nodejs npm git make g++ gcc python3-dev -y
+sudo apt install nodejs git make g++ gcc python3-dev -y
 
 NODE_VERSION=$(node -v)
 NPM_VERSION=$(npm -v)
@@ -64,10 +64,6 @@ else
 	echo "[ ${CYAN}INFO${RESET} ] - Configuration file contains network_key."
 fi
 
-echo "[ ${CYAN}INFO${RESET} ] - Starting Zigbee2MQTT."
-cd /opt/zigbee2mqtt
-npm start
-
 #( Optional but nice :D ) Running as a daemon with systemctl
 
 if ! echo "$(cat /etc/systemd/system/zigbee2mqtt.service)" | grep "^[Unit]";
@@ -96,7 +92,9 @@ cd /home/pi
 echo "[ ${CYAN}INFO${RESET} ] - Installing domoticz."
 curl -L https://install.domoticz.com | bash
 
-cd domoticz/plugins
+sleep 30
+
+cd /home/pi/domoticz/plugins
 
 if ["$(pwd)" -eq "/home/pi/domoticz/plugins"]
 then
