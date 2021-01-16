@@ -10,6 +10,6 @@ Commands used in script come from:
 
 1. Clone repository in user home directory.
    `git clone https://github.com/NiekFlipse97/NFAutoInstallRaspi.git`
-   If git is not installed run : `sudo apt install git -y`
+   - If git is not installed run : `sudo apt install git -y`
 2. Run: `chmod +x autoinstall.sh`
 3. Run: `bash autoinstall.sh`
