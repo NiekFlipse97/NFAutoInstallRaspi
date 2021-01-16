@@ -94,9 +94,10 @@ curl -L https://install.domoticz.com | bash
 
 sleep 30
 
+cd /
 cd /home/pi/domoticz/plugins
 
-if ["$(pwd)" -eq "/home/pi/domoticz/plugins"]
+if echo "$(pwd)" -eq "/home/pi/domoticz/plugins";
 then
 	git clone https://github.com/stas-demydiuk/domoticz-Zigbee2MQTT-plugins.git Zigbee2MQTT
 	echo "[ ${GREEN}OK${RESET} ] - Installed plugin. Restarting domoticz..."
