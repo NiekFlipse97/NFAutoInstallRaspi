@@ -9,5 +9,5 @@ Commands used in script come from:
 # Installation
 
 1. Clone repository in user home directory.
-2. Run: chmod +x autoinstall.sh
-3. bash autoinstall.sh
+2. Run: `chmod +x autoinstall.sh`
+3. Run: `bash autoinstall.sh`
