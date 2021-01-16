@@ -99,7 +99,7 @@ cd /home/pi/domoticz/plugins
 
 if echo "$(pwd)" -eq "/home/pi/domoticz/plugins";
 then
-	git clone https://github.com/stas-demydiuk/domoticz-Zigbee2MQTT-plugins.git Zigbee2MQTT
+	git clone https://github.com/stas-demydiuk/domoticz-zigbee2mqtt-plugin.git Zigbee2MQTT
 	echo "[ ${GREEN}OK${RESET} ] - Installed plugin. Restarting domoticz..."
 	sudo service domoticz.sh restart
 else
