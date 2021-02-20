@@ -13,3 +13,10 @@ Commands used in script come from:
    - If git is not installed run : `sudo apt install git -y`
 2. Run: `chmod +x autoinstall.sh`
 3. Run: `bash autoinstall.sh`
+
+# Post install
+When raspberry crashes on cold start.
+1. Create cronjob: `crontab -e`
+2. write in crontab: `@reboot sleep 480 && sudo service domoticz.sh restart`
+3. Enable cron service: `sudo systemctl enable cron.service`
+4. Start cronjob: `sudo systemctl start cron.service`
